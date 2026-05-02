@@ -290,15 +290,16 @@ footer{background:var(--card);border-top:1px solid var(--line);padding:52px 0 0;
         </div>
 
         <div class="event-card" onclick="openLightbox('event2')">
-          <div class="event-placeholder">
-            <span>🏆</span>
-            <p class="en">Club Launch Day</p>
-            <p class="fr">Journée de Lancement du Club</p>
+          <img src="funday7.jpg" class="event-thumb" alt="Fun Day Event" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+          <div class="event-placeholder" style="display:none">
+            <span>🎉</span>
+            <p class="en">Fun Day Event</p>
+            <p class="fr">Journée Fun</p>
           </div>
           <div class="event-overlay">
             <div>
-              <h4 class="en">Club Launch Day</h4>
-              <h4 class="fr">Journée de Lancement</h4>
+              <h4 class="en">Fun Day Event</h4>
+              <h4 class="fr">Journée Fun</h4>
               <small class="en">Click to view photos</small>
               <small class="fr">Cliquer pour voir les photos</small>
             </div>
@@ -306,15 +307,16 @@ footer{background:var(--card);border-top:1px solid var(--line);padding:52px 0 0;
         </div>
 
         <div class="event-card" onclick="openLightbox('event3')">
-          <div class="event-placeholder">
-            <span>💡</span>
-            <p class="en">Innovation Project Day</p>
-            <p class="fr">Journée Projets Innovation</p>
+          <img src="engliscorner2.jpg" class="event-thumb" alt="English Corner" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+          <div class="event-placeholder" style="display:none">
+            <span>🗣</span>
+            <p class="en">English Corner</p>
+            <p class="fr">English Corner</p>
           </div>
           <div class="event-overlay">
             <div>
-              <h4 class="en">Innovation Project Day</h4>
-              <h4 class="fr">Journée Projets Innovation</h4>
+              <h4 class="en">English Corner</h4>
+              <h4 class="fr">English Corner</h4>
               <small class="en">Click to view photos</small>
               <small class="fr">Cliquer pour voir les photos</small>
             </div>
@@ -627,8 +629,8 @@ burger.addEventListener('click',()=>navLinks.classList.toggle('open'));
 // ── LIGHTBOX DATA (add real image arrays per event here)
 const events = {
   event1:{en:'Triduum Event',fr:'Événement Triduum', imgs:['triduum1.jpg','triduum2.jpg','triduum3.jpg'], videos:['triduumvid1.mp4','triduumvid2.mp4','triduumvid3.mp4']},
-  event2:{en:'Club Launch Day',fr:'Journée de Lancement', imgs:[]},
-  event3:{en:'Innovation Project Day',fr:'Journée Projets Innovation', imgs:[]},
+  event2:{en:'Fun Day Event',fr:'Journée Fun', imgs:['funday1.jpg','funday2.jpg','funday3.jpg','funday4.jpg','funday5.jpg','funday6.jpg','funday7.jpg','funday8.jpg','funday9.jpg']},
+  event3:{en:'English Corner',fr:'English Corner', imgs:['engliscorner1.jpg','engliscorner2.jpg','engliscorner3.jpg','engliscorner4.jpg','engliscorner5.jpg','engliscorner6.jpg','engliscorner7.jpg','engliscorner8.jpg']},
   event4:{en:'Water Awareness Campaign',fr:'Campagne Sensibilisation Eau', imgs:[]},
   event5:{en:'Guest Speaker Session',fr:'Session Conférencier', imgs:[]},
   event6:{en:'Prototype Building Session',fr:'Séance Prototype', imgs:[]},
