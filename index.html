@@ -273,17 +273,18 @@ footer{background:var(--card);border-top:1px solid var(--line);padding:52px 0 0;
       <div class="gallery-grid">
 
         <div class="event-card" onclick="openLightbox('event1')">
-          <div class="event-placeholder">
-            <span>🔬</span>
-            <p class="en">Workshop on Hydraulic Modeling</p>
-            <p class="fr">Atelier sur la Modélisation Hydraulique</p>
+          <img src="triduum1.jpg" class="event-thumb" alt="Triduum Event" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+          <div class="event-placeholder" style="display:none">
+            <span>⚡</span>
+            <p class="en">Triduum Event</p>
+            <p class="fr">Événement Triduum</p>
           </div>
           <div class="event-overlay">
             <div>
-              <h4 class="en">Hydraulic Modeling Workshop</h4>
-              <h4 class="fr">Atelier Modélisation Hydraulique</h4>
-              <small class="en">Click to view photos</small>
-              <small class="fr">Cliquer pour voir les photos</small>
+              <h4 class="en">Triduum Event</h4>
+              <h4 class="fr">Événement Triduum</h4>
+              <small class="en">Click to view photos & videos</small>
+              <small class="fr">Cliquer pour voir photos & vidéos</small>
             </div>
           </div>
         </div>
@@ -625,7 +626,7 @@ burger.addEventListener('click',()=>navLinks.classList.toggle('open'));
 
 // ── LIGHTBOX DATA (add real image arrays per event here)
 const events = {
-  event1:{en:'Hydraulic Modeling Workshop',fr:'Atelier Modélisation Hydraulique', imgs:[]},
+  event1:{en:'Triduum Event',fr:'Événement Triduum', imgs:['triduum1.jpg','triduum2.jpg','triduum3.jpg'], videos:['triduumvid1.mp4','triduumvid2.mp4','triduumvid3.mp4']},
   event2:{en:'Club Launch Day',fr:'Journée de Lancement', imgs:[]},
   event3:{en:'Innovation Project Day',fr:'Journée Projets Innovation', imgs:[]},
   event4:{en:'Water Awareness Campaign',fr:'Campagne Sensibilisation Eau', imgs:[]},
@@ -642,22 +643,34 @@ function openLightbox(id){
   const empty=document.getElementById('lbEmpty');
   const nav=document.getElementById('lbNav');
   const dots=document.getElementById('lbDots');
-  stage.querySelectorAll('img').forEach(i=>i.remove());
+  // clear previous
+  stage.querySelectorAll('img,video').forEach(i=>i.remove());
   dots.innerHTML='';
-  if(curEvent.imgs.length===0){
+  const imgs=curEvent.imgs||[];
+  const vids=curEvent.videos||[];
+  const all=[...imgs.map(s=>({type:'img',src:s})),...vids.map(s=>({type:'vid',src:s}))];
+  if(all.length===0){
     empty.style.display='flex'; nav.style.display='none';
   } else {
     empty.style.display='none';
-    curEvent.imgs.forEach((src,i)=>{
-      const img=document.createElement('img');
-      img.src=src; img.className='lb-slide'+(i===0?' show':'');
-      stage.appendChild(img);
+    all.forEach((item,i)=>{
+      let el;
+      if(item.type==='img'){
+        el=document.createElement('img');
+        el.src=item.src;
+      } else {
+        el=document.createElement('video');
+        el.src=item.src; el.controls=true; el.style.width='100%'; el.style.height='100%'; el.style.objectFit='contain';
+      }
+      el.className='lb-slide'+(i===0?' show':'');
+      stage.appendChild(el);
       const dot=document.createElement('div');
       dot.className='lb-dot'+(i===0?' on':'');
-      dot.onclick=()=>goSlide(i);
+      const idx=i;
+      dot.onclick=()=>goSlide(idx);
       dots.appendChild(dot);
     });
-    nav.style.display=curEvent.imgs.length>1?'flex':'none';
+    nav.style.display=all.length>1?'flex':'none';
   }
   document.getElementById('lightbox').classList.add('open');
   document.body.style.overflow='hidden';
@@ -666,16 +679,19 @@ function openLightbox(id){
 function closeLightbox(){
   document.getElementById('lightbox').classList.remove('open');
   document.body.style.overflow='';
+  document.getElementById('lbStage').querySelectorAll('video').forEach(v=>v.pause());
 }
 function closeLbOutside(e){if(e.target===document.getElementById('lightbox'))closeLightbox()}
 
 function goSlide(n){
-  const imgs=document.getElementById('lbStage').querySelectorAll('img');
+  const slides=document.getElementById('lbStage').querySelectorAll('.lb-slide');
   const dots=document.getElementById('lbDots').querySelectorAll('.lb-dot');
-  imgs[curSlide].classList.remove('show');
+  const cur=slides[curSlide];
+  if(cur && cur.tagName==='VIDEO') cur.pause();
+  cur.classList.remove('show');
   dots[curSlide].classList.remove('on');
-  curSlide=(n+imgs.length)%imgs.length;
-  imgs[curSlide].classList.add('show');
+  curSlide=(n+slides.length)%slides.length;
+  slides[curSlide].classList.add('show');
   dots[curSlide].classList.add('on');
 }
 function lbMove(d){goSlide(curSlide+d)}
